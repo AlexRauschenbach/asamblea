@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Asamblea del Mal - Narrador Profesional</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #1a0d2e;
+            --primary-purple: #2d1b4e;
+            --accent-gold: #d4a574;
+            --accent-purple: #7b5aa3;
+            --danger: #8b2635;
+            --text-light: #f5f1ed;
+            --text-secondary: #b8a89a;
+            --border-gold: #c99a6e;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a050f 0%, #1a0d2e 50%, #0f0810 100%);
+            color: var(--text-light);
+            font-family: 'Georgia', 'Garamond', serif;
+            font-size: 16px;
+            line-height: 1.6;
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(123, 90, 163, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 38, 53, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .app {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 24px;
+            background: linear-gradient(180deg, rgba(123, 90, 163, 0.3) 0%, rgba(45, 27, 78, 0.5) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(212, 165, 116, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(90deg, transparent 0%, rgba(212, 165, 116, 0.05) 50%, transparent 100%),
+                linear-gradient(45deg, rgba(123, 90, 163, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 8px;
+            letter-spacing: 4px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 165, 116, 0.3);
+            position: relative;
+            z-index: 1;
+            font-variant: small-caps;
+        }
+
+        .header p {
+            font-size: 13px;
+            color: var(--accent-purple);
+            letter-spacing: 3px;
+            position: relative;
+            z-index: 1;
+            text-transform: uppercase;
+        }
+
+        .setup-screen { display: flex; flex-direction: column; gap: 20px; }
+        .setup-screen.hidden { display: none; }
+        .game-screen { display: none; flex-direction: column; gap: 24px; }
+        .game-screen.active { display: flex; }
+
+        .section {
+            background: linear-gradient(135deg, rgba(45, 27, 78, 0.6) 0%, rgba(26, 13, 46, 0.8) 100%);
+            border: 2px solid var(--accent-gold);
+            border-radius: 0;
+            padding: 28px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 
+                        inset 0 0 30px rgba(212, 165, 116, 0.08),
+                        inset 0 0 60px rgba(123, 90, 163, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-variant: small-caps;
+            position: relative;
+        }
+
+        .section-title::before {
+            content: '⚔';
+            margin-right: 12px;
+            color: var(--accent-purple);
+        }
+
+        .section-title::after {
+            content: '⚔';
+            margin-left: 12px;
+            color: var(--accent-purple);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 16px;
+            background: rgba(26, 13, 46, 0.8);
+            border: 2px solid var(--accent-gold);
+            color: var(--text-light);
+            border-radius: 0;
+            font-size: 14px;
+            font-family: 'Georgia', serif;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2), inset 0 0 10px rgba(123, 90, 163, 0.1);
+        }
+
+        .button {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--border-gold) 100%);
+            color: var(--primary-dark);
+            border: 2px solid var(--accent-gold);
+            border-radius: 0;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            font-family: 'Georgia', serif;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+        }
+
+        .button:hover {
+            background: linear-gradient(135deg, var(--border-gold) 0%, var(--accent-gold) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(212, 165, 116, 0.5);
+        }
+
+        .button:active {
+            transform: translateY(0);
+        }
+
+        .button-large { width: 100%; padding: 16px; font-size: 16px; }
+
+        .button-secondary {
+            background: transparent;
+            border: 2px solid var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .button-secondary:hover {
+            background: rgba(212, 165, 116, 0.15);
+            color: var(--accent-purple);
+            border-color: var(--accent-purple);
+        }
+
+        .player-setup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .player-setup-card {
+            background: rgba(26, 13, 46, 0.7);
+            border: 2px solid var(--accent-purple);
+            border-radius: 0;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .player-setup-card:hover {
+            border-color: var(--accent-gold);
+            background: rgba(45, 27, 78, 0.8);
+        }
+
+        .player-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .player-label input,
+        .player-label select {
+            width: 100%;
+            margin-top: 6px;
+        }
+
+        /* GAME HUD */
+        .hud-top {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .hud-card {
+            background: linear-gradient(135deg, rgba(45, 27, 78, 0.8) 0%, rgba(26, 13, 46, 0.95) 100%);
+            border: 2px solid var(--accent-gold);
+            border-radius: 0;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+
+        .hud-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .hud-label {
+            font-size: 10px;
+            color: var(--accent-purple);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .hud-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+        }
+
+        .phase-display {
+            background: linear-gradient(135deg, rgba(123, 90, 163, 0.3) 0%, rgba(45, 27, 78, 0.5) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 0;
+            padding: 24px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-variant: small-caps;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+            box-shadow: inset 0 0 30px rgba(212, 165, 116, 0.1);
+        }
+
+        .narration-box {
+            background: linear-gradient(135deg, rgba(45, 27, 78, 0.7) 0%, rgba(26, 13, 46, 0.9) 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 0;
+            padding: 32px;
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-light);
+            line-height: 1.9;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(212, 165, 116, 0.08);
+            position: relative;
+        }
+
+        .narration-box::before,
+        .narration-box::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .narration-box::before { top: 0; }
+        .narration-box::after { bottom: 0; }
+
+        .narration-title {
+            font-size: 14px;
+            color: var(--accent-purple);
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-variant: small-caps;
+        }
+
+        .narration-text {
+            font-style: italic;
+            line-height: 1.9;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .action-box {
+            background: rgba(123, 90, 163, 0.2);
+            border-left: 4px solid var(--accent-purple);
+            padding: 16px;
+            border-radius: 0;
+            font-style: normal;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+
+        .control-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .voice-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .voice-btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--border-gold) 100%);
+            color: var(--primary-dark);
+            border: 2px solid var(--accent-gold);
+            border-radius: 0;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+        }
+
+        .voice-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(212, 165, 116, 0.5);
+        }
+
+        .voice-btn.active {
+            background: linear-gradient(135deg, var(--danger) 0%, #a83447 100%);
+            border-color: var(--danger);
+        }
+
+        .players-in-game {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .player-badge {
+            background: rgba(45, 27, 78, 0.8);
+            border: 1px solid var(--accent-purple);
+            border-radius: 0;
+            padding: 8px 14px;
+            font-size: 12px;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .player-badge:hover {
+            border-color: var(--accent-gold);
+            background: rgba(45, 27, 78, 1);
+        }
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 28px; }
+            .narration-box { min-height: 220px; padding: 24px; }
+            .player-setup-grid { grid-template-columns: 1fr; }
+            .control-buttons { grid-template-columns: 1fr 1fr; }
+            .hud-top { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="header">
+            <h1>⚔ La Asamblea del Mal ⚔</h1>
+            <p>Narrador Profesional</p>
+        </div>
+
+        <!-- SETUP SCREEN -->
+        <div id="setupScreen" class="setup-screen">
+            <div id="step1" class="section">
+                <div class="section-title">Paso 1: Número de Jugadores</div>
+                <div class="input-group">
+                    <input type="number" id="numPlayers" placeholder="Jugadores (5-12)" min="5" max="12" value="5" onchange="updatePlayerSetup()">
+                </div>
+                <button class="button button-large" onclick="goToStep2()">Configurar Jugadores →</button>
+            </div>
+
+            <div id="step2" class="section hidden">
+                <div class="section-title">Paso 2: Jugadores y Personajes</div>
+                <div class="player-setup-grid" id="playersSetupGrid"></div>
+                <button class="button button-large" onclick="startGame()">Comenzar Asamblea →</button>
+                <button class="button button-secondary button-large" onclick="goToStep1()" style="margin-top: 12px;">← Atrás</button>
+            </div>
+        </div>
+
+        <!-- GAME SCREEN -->
+        <div id="gameScreen" class="game-screen">
+            <div class="hud-top">
+                <div class="hud-card">
+                    <div class="hud-label">Fase</div>
+                    <div class="hud-value" id="phaseLabel">—</div>
+                </div>
+                <div class="hud-card">
+                    <div class="hud-label">Ciclo</div>
+                    <div class="hud-value" id="dayNightLabel">—</div>
+                </div>
+                <div class="hud-card">
+                    <div class="hud-label">Vivos</div>
+                    <div class="hud-value" id="aliveLabel">0</div>
+                </div>
+                <div class="hud-card">
+                    <div class="hud-label">Etapa</div>
+                    <div class="hud-value" id="phaseNumLabel">—</div>
+                </div>
+            </div>
+
+            <div class="phase-display" id="phaseDisplay">Preparando...</div>
+
+            <div class="narration-box">
+                <div class="narration-title" id="narratorTitle">El Narrador</div>
+                <div class="narration-text" id="narratorText">Preparando la sesión...</div>
+                <div class="action-box" id="actionBox"></div>
+            </div>
+
+            <div class="voice-controls">
+                <button class="voice-btn" id="playVoiceBtn" onclick="speakNarration()">🔊 Escuchar Narración</button>
+                <button class="voice-btn" onclick="stopSpeech()">⏹️ Detener</button>
+                <button class="voice-btn button-secondary" onclick="toggleInfo()">ℹ️ Participantes</button>
+            </div>
+
+            <div class="control-buttons">
+                <button class="button button-secondary" onclick="previousPhase()">← Fase Anterior</button>
+                <button class="button" onclick="nextPhase()">Siguiente Fase →</button>
+            </div>
+
+            <div id="infoBox" class="section hidden">
+                <div class="section-title">Participantes de la Asamblea</div>
+                <div class="players-in-game" id="playersList"></div>
+                <button class="button button-large" style="margin-top: 20px;" onclick="backToMenu()">Volver al Menú Principal</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const characters = {
+            villains: [
+                { name: 'Hades', emoji: '❄️', type: 'villain', description: 'Salva jugadores' },
+                { name: 'Capitán Garfio', emoji: '🪝', type: 'villain', description: 'Tiene prisionero' },
+                { name: 'La Reina', emoji: '👑', type: 'villain', description: 'Fuerza votación' },
+                { name: 'Madre Gothel', emoji: '🌷', type: 'villain', description: 'Encarcela' },
+                { name: 'Lady Tremaine', emoji: '😈', type: 'villain', description: 'Encarcela (solo)' },
+                { name: 'Maléfica', emoji: '👿', type: 'villain', description: 'Espía cartas' },
+                { name: 'Shere Khan', emoji: '🐯', type: 'villain', description: 'Zarpazos' },
+                { name: 'Príncipe John', emoji: '🤴', type: 'villain', description: 'Corona' },
+                { name: 'La Reina de Corazones', emoji: '💔', type: 'villain', description: 'Fuerza votación' }
+            ],
+            henchmen: [
+                { name: 'Peña y Pánico', emoji: '😈', master: 'Hades' },
+                { name: 'Señor Smee', emoji: '⚓', master: 'Capitán Garfio' },
+                { name: 'El Espejo Mágico', emoji: '🪞', master: 'La Reina' },
+                { name: 'Los Hermanos Stabbington', emoji: '👨‍👨‍👦', master: 'Madre Gothel' },
+                { name: 'Drizella', emoji: '👸', master: 'Lady Tremaine' },
+                { name: 'Anastasia', emoji: '👸', master: 'Lady Tremaine' },
+                { name: 'Diablo', emoji: '🐦', master: 'Maléfica' }
+            ]
+        };
+
+        let selectedPlayers = [];
+        let currentPhase = 0;
+        let isSpeaking = false;
+
+        const createGamePhases = () => {
+            const villainNames = selectedPlayers.filter(p => p.character.type === 'villain').map(p => p.character.name).join(', ');
+            const henchmenNames = selectedPlayers.filter(p => p.character.type === 'henchman').map(p => `${p.name} (${p.character.master})`).join(', ');
+
+            return [
+                {
+                    phase: 'Inicio',
+                    type: 'day',
+                    narration: `Bienvenidos a La Asamblea del Mal. En un reino dominado por el caos y la corrupción, los villanos más poderosos se reúnen. Hoy tenemos a: ${villainNames}. Y sus secuaces: ${henchmenNames}. Algunos de ustedes son Vándalos (buenos), otros son Malhechores (malos). Los Vándalos ganan si eliminan a todos los Malhechores. Los Malhechores ganan si igualan o superan el número de Vándalos.`,
+                    action: 'Todos conocen sus cartas.\nNo pueden votar ni usar poderes contra sí mismos.\nLos Secuaces pueden votar contra su Villano.'
+                },
+                {
+                    phase: 'Noche 1',
+                    type: 'night',
+                    narration: 'Cae la oscuridad sobre el castillo. Las campanas suenan tres veces. El caos se despierta. Los Malhechores despiertan primero para elegir a su víctima. Luego, los villanos con poderes nocturnos actúan en orden.',
+                    action: 'Orden de Noche:\n1. Despierta Malhechores\n2. Maléfica y Diablo\n3. Madre Gothel\n4. Hades\n5. La Madrastra (si está)'
+                },
+                {
+                    phase: 'Mañana 1',
+                    type: 'day',
+                    narration: 'El sol sale lentamente. El castillo despierta en caos. Alguien ha desaparecido en la noche. La víctima es revelada. El miedo inunda la asamblea.',
+                    action: 'Revela la víctima nocturna.\nSe elimina.\nSi era Secuaz y su Villano fue votado contra, también se elimina.'
+                },
+                {
+                    phase: 'Debate 1',
+                    type: 'day',
+                    narration: 'La Asamblea se reúne. Todos tienen derecho a hablar, acusar, defenderse. Los Vándalos buscan descubrir a los Malhechores. Los Malhechores mienten para sobrevivir. La desconfianza flota en el aire como veneno.',
+                    action: 'Debate libre.\nAnima a jugadores tímidos.\nCuando todos se hayan expresado, prepara votación.'
+                },
+                {
+                    phase: 'Votación 1',
+                    type: 'day',
+                    narration: 'Llega el momento de la verdad. Cada jugador vota en silencio. La mayoría simple decide el destino. Los Zarpazos de Shere Khan cuentan como votos adicionales.',
+                    action: 'Cada jugador vota silenciosamente.\nMayoría simple es eliminada.\nSi hay empate, la Corona decide (si está en juego).'
+                },
+                {
+                    phase: 'Noche 2 y Siguientes',
+                    type: 'night',
+                    narration: 'Otra noche cae. Los sobrevivientes permanecen vigilantes. Los poderes se activan nuevamente. El ciclo continúa... ¿Cuándo terminará la asamblea?',
+                    action: 'Repite el orden nocturno.\nVerifica victoria después de cada noche.'
+                },
+                {
+                    phase: 'Ciclo de Días',
+                    type: 'day',
+                    narration: 'El ciclo continúa sin piedad. Día tras día, noche tras noche. Menos gente. Más desconfianza. Más traiciones. Las mentiras se ciernen como un manto oscuro.',
+                    action: 'Repite: Mañana → Debate → Votación → Noche\nVerifica victoria constantemente.'
+                },
+                {
+                    phase: 'Victoria',
+                    type: 'end',
+                    narration: 'La Asamblea ha llegado a su fin. El polvo se disipa. Los ganadores permanecen de pie. Los perdedores desaparecen en las sombras. La historia de esta noche será recordada para siempre.',
+                    action: 'Vándalos ganan: todos los Malhechores eliminados\nMalhechores ganan: igualan o superan a Vándalos'
+                }
+            ];
+        };
+
+        function updatePlayerSetup() {
+            const num = parseInt(document.getElementById('numPlayers').value);
+            if (num < 5 || num > 12) return;
+
+            const grid = document.getElementById('playersSetupGrid');
+            grid.innerHTML = '';
+
+            for (let i = 0; i < num; i++) {
+                const card = document.createElement('div');
+                card.className = 'player-setup-card';
+                card.innerHTML = `
+                    <label class="player-label">
+                        Jugador ${i + 1}
+                        <input type="text" placeholder="Nombre" id="playerName${i}" value="">
+                    </label>
+                    <label class="player-label">
+                        Personaje
+                        <select id="playerChar${i}">
+                            <option value="">Selecciona personaje</option>
+                            <optgroup label="Villanos">
+                                ${characters.villains.map(c => `<option value="villain-${c.name}">${c.emoji} ${c.name}</option>`).join('')}
+                            </optgroup>
+                            <optgroup label="Secuaces">
+                                ${characters.henchmen.map(c => `<option value="henchman-${c.name}">${c.emoji} ${c.name}</option>`).join('')}
+                            </optgroup>
+                        </select>
+                    </label>
+                `;
+                grid.appendChild(card);
+            }
+        }
+
+        function goToStep1() {
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step1').classList.remove('hidden');
+        }
+
+        function goToStep2() {
+            const num = parseInt(document.getElementById('numPlayers').value);
+            if (num < 5 || num > 12) {
+                alert('Selecciona entre 5 y 12 jugadores');
+                return;
+            }
+            updatePlayerSetup();
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+        }
+
+        function startGame() {
+            const num = parseInt(document.getElementById('numPlayers').value);
+            selectedPlayers = [];
+
+            for (let i = 0; i < num; i++) {
+                const name = document.getElementById(`playerName${i}`).value.trim();
+                const charSelect = document.getElementById(`playerChar${i}`).value;
+
+                if (!name || !charSelect) {
+                    alert(`Por favor, completa el jugador ${i + 1}`);
+                    return;
+                }
+
+                const [type, charName] = charSelect.split('-');
+                let character;
+
+                if (type === 'villain') {
+                    character = characters.villains.find(c => c.name === charName);
+                } else {
+                    character = characters.henchmen.find(c => c.name === charName);
+                }
+
+                selectedPlayers.push({ name, character, index: i });
+            }
+
+            document.getElementById('setupScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.add('active');
+
+            currentPhase = 0;
+            updateGameDisplay();
+            showPhase(0);
+        }
+
+        function updateGameDisplay() {
+            document.getElementById('aliveLabel').textContent = selectedPlayers.length;
+
+            let playersList = '';
+            selectedPlayers.forEach(p => {
+                playersList += `<div class="player-badge">${p.character.emoji} ${p.name} — ${p.character.name}</div>`;
+            });
+            document.getElementById('playersList').innerHTML = playersList;
+        }
+
+        function showPhase(phaseIndex) {
+            const phases = createGamePhases();
+            currentPhase = Math.max(0, Math.min(phaseIndex, phases.length - 1));
+            const phase = phases[currentPhase];
+
+            document.getElementById('phaseLabel').textContent = currentPhase + 1;
+            document.getElementById('dayNightLabel').textContent = phase.type === 'night' ? '🌙' : '☀️';
+            document.getElementById('phaseNumLabel').textContent = `${currentPhase + 1}/${phases.length}`;
+            document.getElementById('phaseDisplay').textContent = phase.phase;
+            document.getElementById('narratorTitle').textContent = phase.phase.toUpperCase();
+            document.getElementById('narratorText').innerHTML = phase.narration;
+            document.getElementById('actionBox').innerHTML = phase.action;
+
+            isSpeaking = false;
+        }
+
+        function nextPhase() {
+            stopSpeech();
+            const phases = createGamePhases();
+            showPhase(currentPhase + 1);
+        }
+
+        function previousPhase() {
+            stopSpeech();
+            showPhase(currentPhase - 1);
+        }
+
+        function speakNarration() {
+            if (isSpeaking) {
+                stopSpeech();
+                return;
+            }
+
+            const phases = createGamePhases();
+            const phase = phases[currentPhase];
+            const text = phase.narration;
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'es-ES';
+            utterance.rate = 0.95;
+            utterance.pitch = 0.9;
+
+            utterance.onstart = () => {
+                isSpeaking = true;
+                document.getElementById('playVoiceBtn').classList.add('active');
+            };
+
+            utterance.onend = () => {
+                isSpeaking = false;
+                document.getElementById('playVoiceBtn').classList.remove('active');
+            };
+
+            speechSynthesis.cancel();
+            speechSynthesis.speak(utterance);
+        }
+
+        function stopSpeech() {
+            speechSynthesis.cancel();
+            isSpeaking = false;
+            document.getElementById('playVoiceBtn').classList.remove('active');
+        }
+
+        function toggleInfo() {
+            document.getElementById('infoBox').classList.toggle('hidden');
+        }
+
+        function backToMenu() {
+            if (confirm('¿Estás seguro? Se perderá el progreso.')) {
+                location.reload();
+            }
+        }
+
+        updatePlayerSetup();
+    </script>
+</body>
+</html>
