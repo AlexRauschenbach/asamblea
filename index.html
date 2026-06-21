@@ -17,6 +17,7 @@
             --accent-gold: #d4a574;
             --accent-purple: #7b5aa3;
             --danger: #8b2635;
+            --success: #2d7a3e;
             --text-light: #f5f1ed;
             --text-secondary: #b8a89a;
             --border-gold: #c99a6e;
@@ -61,7 +62,6 @@
             padding: 24px;
             background: linear-gradient(180deg, rgba(123, 90, 163, 0.3) 0%, rgba(45, 27, 78, 0.5) 100%);
             border: 3px solid var(--accent-gold);
-            border-radius: 0;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(212, 165, 116, 0.1);
             position: relative;
             overflow: hidden;
@@ -109,11 +109,8 @@
         .section {
             background: linear-gradient(135deg, rgba(45, 27, 78, 0.6) 0%, rgba(26, 13, 46, 0.8) 100%);
             border: 2px solid var(--accent-gold);
-            border-radius: 0;
             padding: 28px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 
-                        inset 0 0 30px rgba(212, 165, 116, 0.08),
-                        inset 0 0 60px rgba(123, 90, 163, 0.05);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
             position: relative;
             overflow: hidden;
         }
@@ -169,7 +166,6 @@
         }
 
         input[type="number"],
-        input[type="text"],
         select {
             flex: 1;
             min-width: 120px;
@@ -177,7 +173,6 @@
             background: rgba(26, 13, 46, 0.8);
             border: 2px solid var(--accent-gold);
             color: var(--text-light);
-            border-radius: 0;
             font-size: 14px;
             font-family: 'Georgia', serif;
             transition: all 0.3s ease;
@@ -195,7 +190,6 @@
             background: linear-gradient(135deg, var(--accent-gold) 0%, var(--border-gold) 100%);
             color: var(--primary-dark);
             border: 2px solid var(--accent-gold);
-            border-radius: 0;
             cursor: pointer;
             font-weight: 700;
             font-size: 14px;
@@ -230,9 +224,14 @@
             border-color: var(--accent-purple);
         }
 
+        .button-small {
+            padding: 8px 14px;
+            font-size: 12px;
+        }
+
         .player-setup-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 16px;
             margin-bottom: 20px;
         }
@@ -240,7 +239,6 @@
         .player-setup-card {
             background: rgba(26, 13, 46, 0.7);
             border: 2px solid var(--accent-purple);
-            border-radius: 0;
             padding: 16px;
             display: flex;
             flex-direction: column;
@@ -261,13 +259,11 @@
             letter-spacing: 1px;
         }
 
-        .player-label input,
         .player-label select {
             width: 100%;
             margin-top: 6px;
         }
 
-        /* GAME HUD */
         .hud-top {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -278,7 +274,6 @@
         .hud-card {
             background: linear-gradient(135deg, rgba(45, 27, 78, 0.8) 0%, rgba(26, 13, 46, 0.95) 100%);
             border: 2px solid var(--accent-gold);
-            border-radius: 0;
             padding: 16px;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
@@ -314,7 +309,6 @@
         .phase-display {
             background: linear-gradient(135deg, rgba(123, 90, 163, 0.3) 0%, rgba(45, 27, 78, 0.5) 100%);
             border: 3px solid var(--accent-gold);
-            border-radius: 0;
             padding: 24px;
             text-align: center;
             font-size: 28px;
@@ -330,7 +324,6 @@
         .narration-box {
             background: linear-gradient(135deg, rgba(45, 27, 78, 0.7) 0%, rgba(26, 13, 46, 0.9) 100%);
             border: 3px solid var(--accent-gold);
-            border-radius: 0;
             padding: 32px;
             font-size: 16px;
             font-weight: 400;
@@ -370,20 +363,126 @@
         .narration-text {
             font-style: italic;
             line-height: 1.9;
-            margin-bottom: 20px;
             color: var(--text-light);
         }
 
-        .action-box {
-            background: rgba(123, 90, 163, 0.2);
-            border-left: 4px solid var(--accent-purple);
-            padding: 16px;
+        .steps-panel {
+            background: linear-gradient(135deg, rgba(45, 27, 78, 0.6) 0%, rgba(26, 13, 46, 0.8) 100%);
+            border: 2px solid var(--accent-gold);
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+            border-left: 6px solid var(--accent-gold);
+        }
+
+        .steps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .step-item {
+            background: transparent;
+            border: none;
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: all 0.3s ease;
+            cursor: default;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .step-item:last-child {
+            border-bottom: none;
+        }
+
+        .step-number {
+            background: transparent;
+            color: var(--accent-gold);
+            width: auto;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+            min-width: 20px;
+        }
+
+        .step-text {
+            flex: 1;
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .step-text:has(+ .step-number) {
+            background: rgba(212, 165, 116, 0.05);
+            padding: 8px 12px;
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .eliminated-panel {
+            background: linear-gradient(135deg, rgba(139, 38, 53, 0.3) 0%, rgba(26, 13, 46, 0.8) 100%);
+            border: 2px solid var(--danger);
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+        }
+
+        .eliminated-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .eliminated-badge {
+            background: rgba(139, 38, 53, 0.5);
+            border: 1px solid var(--danger);
+            padding: 8px 14px;
+            font-size: 12px;
+            color: var(--text-light);
             border-radius: 0;
-            font-style: normal;
-            font-size: 13px;
-            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .eliminate-btn {
+            background: var(--danger);
+            color: var(--text-light);
+            padding: 6px 12px;
+            font-size: 11px;
+            margin-top: 12px;
+        }
+
+        .eliminate-btn:hover {
+            background: #a83447;
+        }
+
+        .victory-box {
+            background: linear-gradient(135deg, rgba(45, 80, 62, 0.6) 0%, rgba(26, 13, 46, 0.8) 100%);
+            border: 3px solid var(--success);
+            padding: 24px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .victory-title {
+            font-size: 24px;
+            color: var(--success);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .victory-text {
+            font-size: 16px;
+            color: var(--text-light);
             line-height: 1.8;
-            white-space: pre-line;
         }
 
         .control-buttons {
@@ -406,7 +505,6 @@
             background: linear-gradient(135deg, var(--accent-gold) 0%, var(--border-gold) 100%);
             color: var(--primary-dark);
             border: 2px solid var(--accent-gold);
-            border-radius: 0;
             cursor: pointer;
             font-weight: 600;
             font-size: 13px;
@@ -436,7 +534,6 @@
         .player-badge {
             background: rgba(45, 27, 78, 0.8);
             border: 1px solid var(--accent-purple);
-            border-radius: 0;
             padding: 8px 14px;
             font-size: 12px;
             color: var(--text-light);
@@ -469,18 +566,26 @@
         <!-- SETUP SCREEN -->
         <div id="setupScreen" class="setup-screen">
             <div id="step1" class="section">
-                <div class="section-title">Paso 1: Número de Jugadores</div>
+                <div class="section-title">Selecciona Número de Jugadores</div>
                 <div class="input-group">
-                    <input type="number" id="numPlayers" placeholder="Jugadores (5-12)" min="5" max="12" value="5" onchange="updatePlayerSetup()">
+                    <select id="numPlayers" onchange="updatePlayerSetup()" style="flex: 1; padding: 12px 16px;">
+                        <option value="">-- Selecciona cantidad --</option>
+                        <option value="6">6 Jugadores</option>
+                        <option value="7">7 Jugadores</option>
+                        <option value="8">8 Jugadores</option>
+                        <option value="9">9 Jugadores</option>
+                        <option value="10">10 Jugadores</option>
+                        <option value="11">11 Jugadores</option>
+                        <option value="12">12 Jugadores</option>
+                    </select>
                 </div>
-                <button class="button button-large" onclick="goToStep2()">Configurar Jugadores →</button>
-            </div>
 
-            <div id="step2" class="section hidden">
-                <div class="section-title">Paso 2: Jugadores y Personajes</div>
-                <div class="player-setup-grid" id="playersSetupGrid"></div>
-                <button class="button button-large" onclick="startGame()">Comenzar Asamblea →</button>
-                <button class="button button-secondary button-large" onclick="goToStep1()" style="margin-top: 12px;">← Atrás</button>
+                <div id="playersPreview" class="section hidden" style="margin-top: 20px;">
+                    <div class="section-title">Personajes para Esta Partida</div>
+                    <div class="players-in-game" id="previewList"></div>
+                </div>
+
+                <button class="button button-large" onclick="startGame()" id="startBtn" disabled>Comenzar Asamblea →</button>
             </div>
         </div>
 
@@ -510,12 +615,34 @@
             <div class="narration-box">
                 <div class="narration-title" id="narratorTitle">El Narrador</div>
                 <div class="narration-text" id="narratorText">Preparando la sesión...</div>
-                <div class="action-box" id="actionBox"></div>
+            </div>
+
+            <div class="steps-panel">
+                <div class="section-title">Pasos a Seguir</div>
+                <div class="steps-list" id="stepsList"></div>
+            </div>
+
+            <div class="eliminated-panel">
+                <div class="section-title">Personajes Eliminados</div>
+                <div id="eliminatedList" class="eliminated-list">
+                    <p style="color: var(--text-secondary); font-size: 13px;">Ninguno eliminado aún</p>
+                </div>
+                <select id="playerToEliminate" style="margin-top: 12px; width: 100%; padding: 10px;">
+                    <option value="">Selecciona personaje a eliminar</option>
+                </select>
+                <button class="button eliminate-btn button-small" onclick="eliminatePlayer()" style="width: 100%;">Eliminar Personaje</button>
+            </div>
+
+            <div id="victoryBox" class="victory-box hidden">
+                <div class="victory-title" id="victoryTitle">⚔ VICTORIA ⚔</div>
+                <div class="victory-text" id="victoryText">Preparando...</div>
+                <button class="button button-large" style="margin-top: 20px;" onclick="restartGame()">Volver a Empezar</button>
             </div>
 
             <div class="voice-controls">
-                <button class="voice-btn" id="playVoiceBtn" onclick="speakNarration()">🔊 Escuchar Narración</button>
+                <button class="voice-btn" id="playVoiceBtn" onclick="handlePlayPauseClick()">🔊 Escuchar Narración</button>
                 <button class="voice-btn" onclick="stopSpeech()">⏹️ Detener</button>
+                <button class="voice-btn" id="pauseStepsBtn" onclick="toggleStepsPause()">⏸️ Pausar Pasos</button>
                 <button class="voice-btn button-secondary" onclick="toggleInfo()">ℹ️ Participantes</button>
             </div>
 
@@ -533,229 +660,608 @@
     </div>
 
     <script>
-        const characters = {
-            villains: [
-                { name: 'Hades', emoji: '❄️', type: 'villain', description: 'Salva jugadores' },
-                { name: 'Capitán Garfio', emoji: '🪝', type: 'villain', description: 'Tiene prisionero' },
-                { name: 'La Reina', emoji: '👑', type: 'villain', description: 'Fuerza votación' },
-                { name: 'Madre Gothel', emoji: '🌷', type: 'villain', description: 'Encarcela' },
-                { name: 'Lady Tremaine', emoji: '😈', type: 'villain', description: 'Encarcela (solo)' },
-                { name: 'Maléfica', emoji: '👿', type: 'villain', description: 'Espía cartas' },
-                { name: 'Shere Khan', emoji: '🐯', type: 'villain', description: 'Zarpazos' },
-                { name: 'Príncipe John', emoji: '🤴', type: 'villain', description: 'Corona' },
-                { name: 'La Reina de Corazones', emoji: '💔', type: 'villain', description: 'Fuerza votación' }
-            ],
-            henchmen: [
-                { name: 'Peña y Pánico', emoji: '😈', master: 'Hades' },
-                { name: 'Señor Smee', emoji: '⚓', master: 'Capitán Garfio' },
-                { name: 'El Espejo Mágico', emoji: '🪞', master: 'La Reina' },
-                { name: 'Los Hermanos Stabbington', emoji: '👨‍👨‍👦', master: 'Madre Gothel' },
-                { name: 'Drizella', emoji: '👸', master: 'Lady Tremaine' },
-                { name: 'Anastasia', emoji: '👸', master: 'Lady Tremaine' },
-                { name: 'Diablo', emoji: '🐦', master: 'Maléfica' }
-            ]
+        // ==================== SISTEMA DE LEALTADES ====================
+        // La Asamblea del Mal se divide en 2 equipos con objetivos opuestos:
+        
+        // MALHECHORES (Equipo Malvado - Minoría):
+        // - Objetivo: Igualar o superar el número de Vándalos
+        // - Durante la noche: Eligen qué jugador del equipo Vandalo será eliminado
+        // - Durante el día: Intentan ocultar su identidad secreta
+        // - Cantidad: 1-3 jugadores según número total de participantes
+        //   • 6 jugadores = 1 Malhechor
+        //   • 7-11 jugadores = 2 Malhechores
+        //   • 12 jugadores = 3 Malhechores
+        // - Ganan si igualan o superan a Vándalos en jugadores vivos
+        
+        // VÁNDALOS (Equipo Bueno - Mayoría):
+        // - Objetivo: Eliminar a TODOS los Malhechores
+        // - Durante el día: Intentan adivinar quiénes son los Malhechores
+        // - Durante la noche: Descansan (algunos tienen poderes especiales)
+        // - Cantidad: El resto de jugadores no Malhechores
+        // - Ganan si consiguen eliminar a todos los Malhechores
+        
+        // DINÁMICA DEL JUEGO:
+        // 1. NOCHE: Malhechores eligen víctima. Poderes especiales actúan.
+        // 2. DÍA: Víctima nocturna es revelada. Debate y votación para eliminar.
+        // 3. Ciclo continúa hasta que un equipo cumpla su objetivo.
+        // ================================================================
+        
+        // ==================== REGLAS DE LOS SECUACES ====================
+        // Los Secuaces son aliados de sus Villanos correspondientes.
+        // Comparten el mismo equipo (Malhechores o Vándalos según su Villano).
+        
+        // PELIGRO DE VOTAR CONTRA EL VILLANO:
+        // Si un Secuaz vota en contra de su Villano:
+        // - Y el Villano es eliminado por votación
+        // - Y el Villano resulta ser Vandalo (miembro del equipo bueno)
+        // - Entonces el Secuaz TAMBIÉN será eliminado inmediatamente
+        // Este es un riesgo grave para cualquier Secuaz desleal.
+        
+        // HABILIDADES ESPECIALES DE SECUACES:
+        // - DIAVAL (Secuaz de Maléfica): ÚNICA EXCEPCIÓN con poder especial
+        //   Diaval puede mentir o decir verdad a Maléfica sobre lo que espía
+        // - TODOS LOS DEMÁS SECUACES: No tienen habilidades especiales
+        //   Solo apoyan a su Villano y participan en votaciones normales
+        
+        // SECUACES POR VILLANO:
+        // - Maléfica: Diaval (con poder especial)
+        // - Príncipe John: Sir Hiss
+        // - La Reina de Corazones: Rey de Corazones
+        // - Madre Gothel: Los Hermanos Stabbington
+        // - Hades: Peña y Pánico
+        // - Capitán Garfio: Señor Smee
+        // - La Reina: El Espejo Mágico
+        // - Lady Tremaine: Drizella y Anastasia (2 secuaces)
+        // - Shere Khan: NINGUNO (único villano sin secuaces)
+        // ================================================================
+        
+        // ==================== HABILIDADES DE PERSONAJES ====================
+        // MALÉFICA + DIAVAL: Pareja de espías. Cada noche Maléfica elige jugador,
+        // Diaval ve su rol y puede mentir o decir verdad. Si uno muere, otro pierde poder.
+        
+        // PRÍNCIPE JOHN + SIR HISS: Príncipe John comienza con la Corona.
+        // El portador de la Corona decide empates en votaciones.
+        // Si es eliminado, nombra heredero para pasar la Corona.
+        
+        // LA REINA DE CORAZONES + REY DE CORAZONES: Una vez por ronda (día),
+        // La Reina puede acusar a jugador de traición y pedir "¡Que le corten la cabeza!".
+        // Todos votan inmediatamente si salvarlo o eliminarlo. Acusado no vota.
+        // Una vez acusado, La Reina no puede cambiar su voto.
+        
+        // MADRE GOTHEL + LOS HERMANOS STABBINGTON: Cada noche encierra a un jugador
+        // protegiéndolo de ser eliminado. No puede elegir mismo jugador ni a sí misma 2 noches seguidas.
+        
+        // HADES + PEÑA Y PÁNICO: Una sola vez en la partida, Hades puede salvar
+        // a un jugador elegido por Malhechores para ser eliminado. Puede salvarse a sí mismo.
+        
+        // CAPITÁN GARFIO + SEÑOR SMEE: Cada día, Garfio toma un prisionero con la carta de la cuerda.
+        // Si Garfio es eliminado por votación, su prisionero también muere.
+        
+        // LA REINA + EL ESPEJO MÁGICO: Una sola vez en la partida, La Reina puede revelar
+        // la lealtad de un jugador mostrando su carta. Si es Vandalo, es eliminado inmediatamente.
+        
+        // LADY TREMAINE + DRIZELLA + ANASTASIA: Lady Tremaine NO tiene poder especial.
+        // Solo destaca por tener 2 secuaces (única villana con 2 secuaces).
+        
+        // SHERE KHAN: Cuando vota contra un jugador, ese jugador recibe una "Garra".
+        // En votaciones futuras, cada Garra = 1 voto en contra adicional.
+        // Shere Khan es el único villano SIN secuaces.
+        // ====================================================================
+        
+        const playerDistribution = {
+            6: {
+                malhechoresCount: 1,
+                characters: [
+                    { name: 'Madre Gothel', emoji: '🌷', type: 'villain', team: 'malhechores' },
+                    { name: 'Los Hermanos Stabbington', emoji: '👨‍👨‍👦', master: 'Madre Gothel', team: 'malhechores' },
+                    { name: 'Hades', emoji: '❄️', type: 'villain', team: 'malhechores' },
+                    { name: 'Peña y Pánico', emoji: '😈', master: 'Hades', team: 'malhechores' },
+                    { name: 'Príncipe John', emoji: '🤴', type: 'villain', team: 'malhechores' },
+                    { name: 'Sir Hiss', emoji: '🐍', master: 'Príncipe John', team: 'malhechores' }
+                ]
+            },
+            7: {
+                malhechoresCount: 2,
+                characters: [
+                    { name: 'Maléfica', emoji: '👿', type: 'villain', team: 'malhechores' },
+                    { name: 'Diaval', emoji: '🐦', master: 'Maléfica', team: 'malhechores' },
+                    { name: 'Hades', emoji: '❄️', type: 'villain', team: 'malhechores' },
+                    { name: 'Peña y Pánico', emoji: '😈', master: 'Hades', team: 'malhechores' },
+                    { name: 'Lady Tremaine', emoji: '😈', type: 'villain', team: 'malhechores' },
+                    { name: 'Anastasia', emoji: '👸', master: 'Lady Tremaine', team: 'malhechores' },
+                    { name: 'Drizella', emoji: '👸', master: 'Lady Tremaine', team: 'malhechores' }
+                ]
+            },
+            8: {
+                malhechoresCount: 2,
+                characters: [
+                    { name: 'Maléfica', emoji: '👿', type: 'villain', team: 'malhechores' },
+                    { name: 'Diaval', emoji: '🐦', master: 'Maléfica', team: 'malhechores' },
+                    { name: 'Hades', emoji: '❄️', type: 'villain', team: 'malhechores' },
+                    { name: 'Peña y Pánico', emoji: '😈', master: 'Hades', team: 'malhechores' },
+                    { name: 'La Reina', emoji: '👑', type: 'villain', team: 'malhechores' },
+                    { name: 'El Espejo Mágico', emoji: '🪞', master: 'La Reina', team: 'malhechores' },
+                    { name: 'Príncipe John', emoji: '🤴', type: 'villain', team: 'malhechores' },
+                    { name: 'Sir Hiss', emoji: '🐍', master: 'Príncipe John', team: 'malhechores' }
+                ]
+            },
+            9: {
+                malhechoresCount: 2,
+                characters: [
+                    { name: 'Maléfica', emoji: '👿', type: 'villain', team: 'malhechores' },
+                    { name: 'Diaval', emoji: '🐦', master: 'Maléfica', team: 'malhechores' },
+                    { name: 'Hades', emoji: '❄️', type: 'villain', team: 'malhechores' },
+                    { name: 'Peña y Pánico', emoji: '😈', master: 'Hades', team: 'malhechores' },
+                    { name: 'Lady Tremaine', emoji: '😈', type: 'villain', team: 'malhechores' },
+                    { name: 'Anastasia', emoji: '👸', master: 'Lady Tremaine', team: 'malhechores' },
+                    { name: 'Drizella', emoji: '👸', master: 'Lady Tremaine', team: 'malhechores' },
+                    { name: 'Príncipe John', emoji: '🤴', type: 'villain', team: 'malhechores' },
+                    { name: 'Sir Hiss', emoji: '🐍', master: 'Príncipe John', team: 'malhechores' }
+                ]
+            },
+            10: {
+                malhechoresCount: 2,
+                characters: [
+                    { name: 'Maléfica', emoji: '👿', type: 'villain', team: 'malhechores' },
+                    { name: 'Diaval', emoji: '🐦', master: 'Maléfica', team: 'malhechores' },
+                    { name: 'Hades', emoji: '❄️', type: 'villain', team: 'malhechores' },
+                    { name: 'Peña y Pánico', emoji: '😈', master: 'Hades', team: 'malhechores' },
+                    { name: 'Capitán Garfio', emoji: '🪝', type: 'villain', team: 'malhechores' },
+                    { name: 'Señor Smee', emoji: '⚓', master: 'Capitán Garfio', team: 'malhechores' },
+                    { name: 'La Reina', emoji: '👑', type: 'villain', team: 'malhechores' },
+                    { name: 'El Espejo Mágico', emoji: '🪞', master: 'La Reina', team: 'malhechores' },
+                    { name: 'Príncipe John', emoji: '🤴', type: 'villain', team: 'malhechores' },
+                    { name: 'Sir Hiss', emoji: '🐍', master: 'Príncipe John', team: 'malhechores' }
+                ]
+            },
+            11: {
+                malhechoresCount: 2,
+                characters: [
+                    { name: 'Maléfica', emoji: '👿', type: 'villain', team: 'malhechores' },
+                    { name: 'Diaval', emoji: '🐦', master: 'Maléfica', team: 'malhechores' },
+                    { name: 'Hades', emoji: '❄️', type: 'villain', team: 'malhechores' },
+                    { name: 'Peña y Pánico', emoji: '😈', master: 'Hades', team: 'malhechores' },
+                    { name: 'Lady Tremaine', emoji: '😈', type: 'villain', team: 'malhechores' },
+                    { name: 'Anastasia', emoji: '👸', master: 'Lady Tremaine', team: 'malhechores' },
+                    { name: 'Drizella', emoji: '👸', master: 'Lady Tremaine', team: 'malhechores' },
+                    { name: 'Capitán Garfio', emoji: '🪝', type: 'villain', team: 'malhechores' },
+                    { name: 'Señor Smee', emoji: '⚓', master: 'Capitán Garfio', team: 'malhechores' },
+                    { name: 'Príncipe John', emoji: '🤴', type: 'villain', team: 'malhechores' },
+                    { name: 'Sir Hiss', emoji: '🐍', master: 'Príncipe John', team: 'malhechores' }
+                ]
+            },
+            12: {
+                malhechoresCount: 3,
+                characters: [
+                    { name: 'Maléfica', emoji: '👿', type: 'villain', team: 'malhechores' },
+                    { name: 'Diaval', emoji: '🐦', master: 'Maléfica', team: 'malhechores' },
+                    { name: 'Madre Gothel', emoji: '🌷', type: 'villain', team: 'malhechores' },
+                    { name: 'Los Hermanos Stabbington', emoji: '👨‍👨‍👦', master: 'Madre Gothel', team: 'malhechores' },
+                    { name: 'Hades', emoji: '❄️', type: 'villain', team: 'malhechores' },
+                    { name: 'Peña y Pánico', emoji: '😈', master: 'Hades', team: 'malhechores' },
+                    { name: 'La Reina', emoji: '👑', type: 'villain', team: 'malhechores' },
+                    { name: 'El Espejo Mágico', emoji: '🪞', master: 'La Reina', team: 'malhechores' },
+                    { name: 'Capitán Garfio', emoji: '🪝', type: 'villain', team: 'malhechores' },
+                    { name: 'Señor Smee', emoji: '⚓', master: 'Capitán Garfio', team: 'malhechores' },
+                    { name: 'Príncipe John', emoji: '🤴', type: 'villain', team: 'malhechores' },
+                    { name: 'Sir Hiss', emoji: '🐍', master: 'Príncipe John', team: 'malhechores' }
+                ]
+            }
         };
 
         let selectedPlayers = [];
+        let eliminatedPlayers = [];
         let currentPhase = 0;
         let isSpeaking = false;
+        let gameEnded = false;
+        let stepsPaused = false;
 
-        const createGamePhases = () => {
-            const villainNames = selectedPlayers.filter(p => p.character.type === 'villain').map(p => p.character.name).join(', ');
-            const henchmenNames = selectedPlayers.filter(p => p.character.type === 'henchman').map(p => `${p.name} (${p.character.master})`).join(', ');
+        function getAliveVillains() {
+            return selectedPlayers.filter(p => 
+                !eliminatedPlayers.includes(p.index) && 
+                p.character.type === 'villain'
+            );
+        }
 
-            return [
-                {
+        function getAliveMalhechores() {
+            return selectedPlayers.filter(p => 
+                !eliminatedPlayers.includes(p.index) && 
+                p.character.team === 'malhechores'
+            );
+        }
+
+        function getAliveVandalos() {
+            return selectedPlayers.filter(p => 
+                !eliminatedPlayers.includes(p.index) && 
+                p.character.team !== 'malhechores'
+            );
+        }
+
+        function checkVictory() {
+            const aliveMalhechores = getAliveMalhechores();
+            const aliveVandalos = getAliveVandalos();
+            const totalAlive = aliveMalhechores.length + aliveVandalos.length;
+
+            if (aliveMalhechores.length === 0) {
+                return { victory: true, winner: 'vándalos', malhechores: aliveMalhechores.length, vandalos: aliveVandalos.length };
+            }
+
+            if (aliveMalhechores.length >= aliveVandalos.length && totalAlive > 0) {
+                return { victory: true, winner: 'malhechores', malhechores: aliveMalhechores.length, vandalos: aliveVandalos.length };
+            }
+
+            return { victory: false, malhechores: aliveMalhechores.length, vandalos: aliveVandalos.length };
+        }
+
+        function generateDynamicSteps() {
+            const aliveVillains = getAliveVillains();
+            const aliveMalhechores = getAliveMalhechores();
+            const aliveVandalos = getAliveVandalos();
+            
+            if (aliveMalhechores === 0) {
+                return "No hay Malhechores vivos. El juego ha terminado con victoria de los Vándalos.";
+            }
+
+            let steps = [];
+
+            // Orden dinámico basado en personajes vivos
+            steps.push("Dile a todos cierre los ojos");
+            steps.push("Malhechores despierten y señalen a su víctima silenciosamente");
+            
+            if (aliveVillains.some(p => p.character.name === 'Maléfica')) {
+                steps.push("Maléfica y Diaval despierten. Diaval señala a quién espiar");
+            }
+            
+            if (aliveVillains.some(p => p.character.name === 'Madre Gothel')) {
+                steps.push("Madre Gothel despierta. Señala a quién encarcelar");
+            }
+            
+            if (aliveVillains.some(p => p.character.name === 'Hades')) {
+                steps.push("Hades despierta. Quieres salvar a la víctima de los Malhechores?");
+            }
+            
+            if (aliveVillains.some(p => p.character.name === 'Lady Tremaine')) {
+                steps.push("La Madrastra despierta. Usa su poder nocturno");
+            }
+
+            steps.push("Todos despierten. Es de día");
+
+            return steps.join('. ');
+        }
+
+        function generateGameNarration(phase) {
+            const aliveVillains = getAliveVillains();
+            const villainNames = aliveVillains.map(p => p.character.name).join(', ') || 'ninguno';
+            const aliveMalhechores = getAliveMalhechores();
+            const aliveVandalos = getAliveVandalos();
+
+            // Verificar victoria primero
+            if (aliveMalhechores.length === 0) {
+                return {
+                    phase: 'Victoria Vándalos',
+                    type: 'end',
+                    narration: "¡Los Vándalos han ganado! El castillo tiembla. El último Malhechor cae. La luz regresa a los reinos. Los Vándalos se alzan victoriosos. La Asamblea ha terminado. Los reinos volverán a respirar en paz.",
+                    action: "Todos los Malhechores han sido eliminados. Yo anuncio que los Vándalos ganan. Revelo todas las cartas restantes. Discuto quién fue el Malhechor inteligente y quién fue engañado. Celebro el final épico de la partida."
+                };
+            }
+
+            if (aliveMalhechores.length >= aliveVandalos.length && aliveVandalos.length > 0) {
+                return {
+                    phase: 'Victoria Malhechores',
+                    type: 'end',
+                    narration: "¡Los Malhechores han ganado! Los Malhechores sonríen en las sombras. Han logrado igualar o superar a los Vándalos. La corrupción ha ganado. Los reinos caerán bajo su dominio. La Asamblea termina en derrota para la luz. El mal reina supremo.",
+                    action: "Los Malhechores igualan o superan el número de Vándalos en vivos. Yo anuncio que los Malhechores ganan. Revelo todas las cartas restantes. Explico cómo los Malhechores lograron sobrevivir y engañar a los Vándalos. Celebro el triunfo del mal."
+                };
+            }
+
+            const phases = {
+                0: {
                     phase: 'Inicio',
                     type: 'day',
-                    narration: `Bienvenidos a La Asamblea del Mal. En un reino dominado por el caos y la corrupción, los villanos más poderosos se reúnen. Hoy tenemos a: ${villainNames}. Y sus secuaces: ${henchmenNames}. Algunos de ustedes son Vándalos (buenos), otros son Malhechores (malos). Los Vándalos ganan si eliminan a todos los Malhechores. Los Malhechores ganan si igualan o superan el número de Vándalos.`,
-                    action: 'Todos conocen sus cartas.\nNo pueden votar ni usar poderes contra sí mismos.\nLos Secuaces pueden votar contra su Villano.'
+                    narration: `Bienvenidos a La Asamblea del Mal. En un reino dominado por el caos, los villanos más poderosos se reúnen. Hoy jugamos con: ${villainNames}. Algunos de ustedes son Vándalos, deben eliminar Malhechores. Otros son Malhechores, deben igualar o superar a Vándalos. Cada uno conoce su equipo secretamente.`,
+                    action: "Voy a entregar las cartas de rol. Distribuyo las cartas boca abajo. Cada jugador mira su carta EN SECRETO sin mostrarla a nadie. Cuando todos hayan visto su carta, me avisan para continuar."
                 },
-                {
+                1: {
                     phase: 'Noche 1',
                     type: 'night',
-                    narration: 'Cae la oscuridad sobre el castillo. Las campanas suenan tres veces. El caos se despierta. Los Malhechores despiertan primero para elegir a su víctima. Luego, los villanos con poderes nocturnos actúan en orden.',
-                    action: 'Orden de Noche:\n1. Despierta Malhechores\n2. Maléfica y Diablo\n3. Madre Gothel\n4. Hades\n5. La Madrastra (si está)'
+                    narration: 'Cae la oscuridad absoluta. Las campanas del castillo suenan tres veces. Todos cierren los ojos. La noche es el momento de los Malhechores. Su magia fluye sin restricciones. Uno a uno, los poderes nocturnos despiertan en las sombras.',
+                    action: generateNightSteps()
                 },
-                {
+                2: {
                     phase: 'Mañana 1',
                     type: 'day',
-                    narration: 'El sol sale lentamente. El castillo despierta en caos. Alguien ha desaparecido en la noche. La víctima es revelada. El miedo inunda la asamblea.',
-                    action: 'Revela la víctima nocturna.\nSe elimina.\nSi era Secuaz y su Villano fue votado contra, también se elimina.'
+                    narration: 'El sol sale lentamente sobre el castillo. El aire es pesado. Una presencia ha desaparecido. El silencio se quiebra. La primera víctima es revelada. El miedo corre por la asamblea.',
+                    action: "Ha llegado la mañana. Un jugador ha sido eliminado en la noche. Pregunto cuál es la víctima. Cuando me lo digan, todos abren los ojos. El eliminado revela su carta de rol. Ese personaje queda fuera del juego."
                 },
-                {
+                3: {
                     phase: 'Debate 1',
                     type: 'day',
-                    narration: 'La Asamblea se reúne. Todos tienen derecho a hablar, acusar, defenderse. Los Vándalos buscan descubrir a los Malhechores. Los Malhechores mienten para sobrevivir. La desconfianza flota en el aire como veneno.',
-                    action: 'Debate libre.\nAnima a jugadores tímidos.\nCuando todos se hayan expresado, prepara votación.'
+                    narration: 'La Asamblea se reúne en la gran sala. Todos tienen voz. Algunos acusan. Otros se defienden. La desconfianza es un arma. Las palabras vuelan como dagas. Quién es el Malhechor? Quién miente?',
+                    action: 'Ahora abrimos el debate. Todos pueden hablar y acusar a quién crean que es Malhechor. Cada jugador puede defenderse o acusar a otros. Si alguien es muy tímido, le pregunto contra quién quiere votar y por qué lo sospecha. Mantengo el debate animado y vivo. Cuando siento que todos han expresado sus sospechas, anuncio que es hora de votar.'
                 },
-                {
+                4: {
                     phase: 'Votación 1',
                     type: 'day',
-                    narration: 'Llega el momento de la verdad. Cada jugador vota en silencio. La mayoría simple decide el destino. Los Zarpazos de Shere Khan cuentan como votos adicionales.',
-                    action: 'Cada jugador vota silenciosamente.\nMayoría simple es eliminada.\nSi hay empate, la Corona decide (si está en juego).'
+                    narration: 'Llega el momento crítico. Cada jugador vota en silencio absoluto. Nadie puede revelar su voto. La mayoría simple decide quién muere. No hay apelaciones. No hay segundas oportunidades.',
+                    action: 'Ahora todos cierren los ojos para votar en secreto. Voy a señalar a cada jugador uno por uno. Cuando te señale, levanta la mano y señala silenciosamente contra quién quieres votar. Nadie más puede ver tu voto. Espero a que todos voten. Cuando terminen, digo que abran los ojos. El jugador con más votos es eliminado y revela su rol.'
                 },
-                {
+                5: {
                     phase: 'Noche 2 y Siguientes',
                     type: 'night',
-                    narration: 'Otra noche cae. Los sobrevivientes permanecen vigilantes. Los poderes se activan nuevamente. El ciclo continúa... ¿Cuándo terminará la asamblea?',
-                    action: 'Repite el orden nocturno.\nVerifica victoria después de cada noche.'
+                    narration: 'Otra noche desciende. Los sobrevivientes tiemblan. El ciclo continúa. Los Malhechores vuelven a actuar. Sus poderes fluyen nuevamente. El ciclo de muerte continúa inexorable.',
+                    action: generateNightSteps()
                 },
-                {
-                    phase: 'Ciclo de Días',
+                6: {
+                    phase: 'Ciclo Continuo',
                     type: 'day',
-                    narration: 'El ciclo continúa sin piedad. Día tras día, noche tras noche. Menos gente. Más desconfianza. Más traiciones. Las mentiras se ciernen como un manto oscuro.',
-                    action: 'Repite: Mañana → Debate → Votación → Noche\nVerifica victoria constantemente.'
-                },
-                {
-                    phase: 'Victoria',
-                    type: 'end',
-                    narration: 'La Asamblea ha llegado a su fin. El polvo se disipa. Los ganadores permanecen de pie. Los perdedores desaparecen en las sombras. La historia de esta noche será recordada para siempre.',
-                    action: 'Vándalos ganan: todos los Malhechores eliminados\nMalhechores ganan: igualan o superan a Vándalos'
+                    narration: `El patrón se repite sin cesar. Noche tras noche. Día tras día. Las muertes se acumulan. Los secretos se revelan. Vivos: ${aliveMalhechores.length} Malhechores, ${aliveVandalos.length} Vándalos.`,
+                    action: "El ciclo continúa. Repito la secuencia: Noche (Malhechores eligen víctima y poderes actúan). Mañana (revelo eliminado). Debate. Votación. Verifico victoria después de cada eliminación. Si alguien gana, la partida termina."
                 }
-            ];
-        };
+            };
+
+            return phases[Math.min(phase, 6)] || phases[6];
+        }
+
+        function generateNightSteps() {
+            const aliveVillains = getAliveVillains();
+            const steps = [];
+
+            steps.push("Todos cierren los ojos. Espero 3 segundos para que estén listos.");
+            steps.push("Despierto a los Malhechores. Digo: Malhechores, despierten silenciosamente y con cuidado. Ustedes van a elegir a su víctima. Señalen juntos, sin hablar, a quién quieren eliminar en la noche. Espero a que todos señalen. Cuando terminen, digo que duerman.");
+            
+            if (aliveVillains.some(p => p.character.name === 'Maléfica')) {
+                steps.push("Despierto a Maléfica. Digo: Maléfica despierta. Cada noche eliges a un jugador que debe desvelar su lealtad ante Diaval. Señala silenciosamente a quién espías esta noche. Cuando señales, duerme. Luego despierto a Diaval en privado y le muestro quién es el espía y cuál es su rol verdadero. Digo: Diaval, ¿le dices la verdad a Maléfica o le mientes para proteger a un aliado? Espero su decisión. Cuando decida, que duerma. Le recuerdo: si uno de ustedes dos es eliminado, el otro pierde su poder.");
+            }
+            
+            if (aliveVillains.some(p => p.character.name === 'Madre Gothel')) {
+                steps.push("Despierto a Madre Gothel. Digo: Madre Gothel despierta. Tu poder es encarcelar a un jugador en tu escondite, protegiéndolo de ser eliminado esta noche. Señala silenciosamente a quién quieres encarcelar. Recuerda: no puedes elegir al mismo jugador ni a ti misma dos noches seguidas. Cuando señales, duerme.");
+            }
+            
+            if (aliveVillains.some(p => p.character.name === 'Hades')) {
+                steps.push("Despierto a Hades. Digo: Hades despierta. Una sola vez en toda la partida, puedes salvar a un jugador que los Malhechores hayan elegido eliminar. Voy a mostrarte silenciosamente a la víctima que los Malhechores eligieron. ¿Quieres salvarla o dejarla morir? Si salvas, esa noche será como si nada pasó. Solo puedes usar este poder una sola vez. Cuando decidas, duerme.");
+            }
+            
+            if (aliveVillains.some(p => p.character.name === 'Capitán Garfio')) {
+                steps.push("Despierto a Capitán Garfio. Digo: Capitán Garfio despierta. Al comienzo de cada día, tomarás un prisionero dándole la carta de la cuerda. Ese prisionero estará bajo tu custodia. Si eres eliminado por votación, tu prisionero también será eliminado. Cuando despiertes mañana, elige a tu prisionero. Por ahora, duerme.");
+            }
+
+            steps.push("Todos permanecen durmiendo. Espero 5 segundos en silencio para crear tensión. Luego digo al grupo: La noche ha pasado. Todos despierten lentamente y abran los ojos. La mañana ha llegado.");
+
+            return steps.join(" | ");
+        }
 
         function updatePlayerSetup() {
             const num = parseInt(document.getElementById('numPlayers').value);
-            if (num < 5 || num > 12) return;
-
-            const grid = document.getElementById('playersSetupGrid');
-            grid.innerHTML = '';
-
-            for (let i = 0; i < num; i++) {
-                const card = document.createElement('div');
-                card.className = 'player-setup-card';
-                card.innerHTML = `
-                    <label class="player-label">
-                        Jugador ${i + 1}
-                        <input type="text" placeholder="Nombre" id="playerName${i}" value="">
-                    </label>
-                    <label class="player-label">
-                        Personaje
-                        <select id="playerChar${i}">
-                            <option value="">Selecciona personaje</option>
-                            <optgroup label="Villanos">
-                                ${characters.villains.map(c => `<option value="villain-${c.name}">${c.emoji} ${c.name}</option>`).join('')}
-                            </optgroup>
-                            <optgroup label="Secuaces">
-                                ${characters.henchmen.map(c => `<option value="henchman-${c.name}">${c.emoji} ${c.name}</option>`).join('')}
-                            </optgroup>
-                        </select>
-                    </label>
-                `;
-                grid.appendChild(card);
-            }
-        }
-
-        function goToStep1() {
-            document.getElementById('step2').classList.add('hidden');
-            document.getElementById('step1').classList.remove('hidden');
-        }
-
-        function goToStep2() {
-            const num = parseInt(document.getElementById('numPlayers').value);
-            if (num < 5 || num > 12) {
-                alert('Selecciona entre 5 y 12 jugadores');
+            
+            if (!num || !playerDistribution[num]) {
+                document.getElementById('playersPreview').classList.add('hidden');
+                document.getElementById('startBtn').disabled = true;
                 return;
             }
-            updatePlayerSetup();
-            document.getElementById('step1').classList.add('hidden');
-            document.getElementById('step2').classList.remove('hidden');
+
+            // Mostrar preview
+            const preview = document.getElementById('playersPreview');
+            const previewList = document.getElementById('previewList');
+            
+            const distribution = playerDistribution[num];
+            const malhechoresCount = distribution.malhechoresCount;
+            const vandalosCount = num - malhechoresCount;
+            
+            let previewHTML = `<p style="color: var(--accent-gold); font-size: 13px; margin-bottom: 12px; font-weight: 600;">Personajes para esta partida (${malhechoresCount} Malhechores, ${vandalosCount} Vándalos):</p>`;
+            
+            distribution.characters.forEach((char, idx) => {
+                previewHTML += `<div class="player-badge">${char.emoji} ${char.name}</div>`;
+            });
+
+            previewList.innerHTML = previewHTML;
+            preview.classList.remove('hidden');
+            document.getElementById('startBtn').disabled = false;
         }
 
         function startGame() {
             const num = parseInt(document.getElementById('numPlayers').value);
-            selectedPlayers = [];
-
-            for (let i = 0; i < num; i++) {
-                const name = document.getElementById(`playerName${i}`).value.trim();
-                const charSelect = document.getElementById(`playerChar${i}`).value;
-
-                if (!name || !charSelect) {
-                    alert(`Por favor, completa el jugador ${i + 1}`);
-                    return;
-                }
-
-                const [type, charName] = charSelect.split('-');
-                let character;
-
-                if (type === 'villain') {
-                    character = characters.villains.find(c => c.name === charName);
-                } else {
-                    character = characters.henchmen.find(c => c.name === charName);
-                }
-
-                selectedPlayers.push({ name, character, index: i });
+            
+            if (!num || !playerDistribution[num]) {
+                alert('Por favor selecciona una cantidad válida de jugadores');
+                return;
             }
+
+            selectedPlayers = [];
+            eliminatedPlayers = [];
+            gameEnded = false;
+
+            const distribution = playerDistribution[num];
+            const malhechoresCount = distribution.malhechoresCount;
+            const vandalosCount = num - malhechoresCount;
+            
+            // Crear array de roles (Malhechores primero, luego Vándalos)
+            const roles = [];
+            for (let i = 0; i < malhechoresCount; i++) {
+                roles.push('malhechor');
+            }
+            for (let i = 0; i < vandalosCount; i++) {
+                roles.push('vandalo');
+            }
+            
+            // Barajar roles
+            roles.sort(() => Math.random() - 0.5);
+            
+            // Asignar personajes y roles
+            distribution.characters.forEach((character, index) => {
+                const role = roles[index] || 'vandalo';
+                const team = role === 'malhechor' ? 'malhechores' : 'vandalos';
+                
+                selectedPlayers.push({ 
+                    name: `Jugador ${index + 1}`, 
+                    character: { ...character, team },
+                    index,
+                    role 
+                });
+            });
 
             document.getElementById('setupScreen').classList.add('hidden');
             document.getElementById('gameScreen').classList.add('active');
 
             currentPhase = 0;
             updateGameDisplay();
+            updateEliminateSelect();
             showPhase(0);
         }
 
         function updateGameDisplay() {
-            document.getElementById('aliveLabel').textContent = selectedPlayers.length;
+            const aliveCount = selectedPlayers.length - eliminatedPlayers.length;
+            document.getElementById('aliveLabel').textContent = aliveCount;
 
             let playersList = '';
             selectedPlayers.forEach(p => {
-                playersList += `<div class="player-badge">${p.character.emoji} ${p.name} — ${p.character.name}</div>`;
+                const isEliminated = eliminatedPlayers.includes(p.index);
+                playersList += `<div class="player-badge" style="${isEliminated ? 'opacity: 0.5; text-decoration: line-through;' : ''}">${p.character.emoji} ${p.name} — ${p.character.name}</div>`;
             });
             document.getElementById('playersList').innerHTML = playersList;
         }
 
-        function showPhase(phaseIndex) {
-            const phases = createGamePhases();
-            currentPhase = Math.max(0, Math.min(phaseIndex, phases.length - 1));
-            const phase = phases[currentPhase];
+        function updateEliminateSelect() {
+            const select = document.getElementById('playerToEliminate');
+            select.innerHTML = '<option value="">Selecciona personaje a eliminar</option>';
 
-            document.getElementById('phaseLabel').textContent = currentPhase + 1;
-            document.getElementById('dayNightLabel').textContent = phase.type === 'night' ? '🌙' : '☀️';
-            document.getElementById('phaseNumLabel').textContent = `${currentPhase + 1}/${phases.length}`;
-            document.getElementById('phaseDisplay').textContent = phase.phase;
-            document.getElementById('narratorTitle').textContent = phase.phase.toUpperCase();
-            document.getElementById('narratorText').innerHTML = phase.narration;
-            document.getElementById('actionBox').innerHTML = phase.action;
-
-            isSpeaking = false;
+            selectedPlayers.forEach((p, idx) => {
+                if (!eliminatedPlayers.includes(p.index)) {
+                    const option = document.createElement('option');
+                    option.value = p.index;
+                    option.textContent = `${p.character.emoji} ${p.character.name} (${p.name})`;
+                    select.appendChild(option);
+                }
+            });
         }
 
-        function nextPhase() {
-            stopSpeech();
-            const phases = createGamePhases();
-            showPhase(currentPhase + 1);
-        }
+        function eliminatePlayer() {
+            const select = document.getElementById('playerToEliminate');
+            const playerIndex = parseInt(select.value);
 
-        function previousPhase() {
-            stopSpeech();
-            showPhase(currentPhase - 1);
-        }
-
-        function speakNarration() {
-            if (isSpeaking) {
-                stopSpeech();
+            if (isNaN(playerIndex)) {
+                alert('Por favor selecciona un personaje');
                 return;
             }
 
-            const phases = createGamePhases();
-            const phase = phases[currentPhase];
-            const text = phase.narration;
+            if (!eliminatedPlayers.includes(playerIndex)) {
+                eliminatedPlayers.push(playerIndex);
+            }
 
-            const utterance = new SpeechSynthesisUtterance(text);
+            // Actualizar UI
+            updateGameDisplay();
+            updateEliminateSelect();
+            updateEliminatedList();
+            showPhase(currentPhase);
+
+            // Verificar victoria
+            const victoryCheck = checkVictory();
+            if (victoryCheck.victory) {
+                showVictory(victoryCheck);
+            }
+        }
+
+        function updateEliminatedList() {
+            const list = document.getElementById('eliminatedList');
+            const eliminated = selectedPlayers.filter(p => eliminatedPlayers.includes(p.index));
+
+            if (eliminated.length === 0) {
+                list.innerHTML = '<p style="color: var(--text-secondary); font-size: 13px;">Ninguno eliminado aún</p>';
+            } else {
+                list.innerHTML = eliminated.map(p => 
+                    `<div class="eliminated-badge">${p.character.emoji} ${p.character.name} ✗</div>`
+                ).join('');
+            }
+        }
+
+        function showVictory(victoryData) {
+            gameEnded = true;
+            const victoryBox = document.getElementById('victoryBox');
+            const victoryTitle = document.getElementById('victoryTitle');
+            const victoryText = document.getElementById('victoryText');
+
+            if (victoryData.winner === 'vándalos') {
+                victoryTitle.textContent = '⚔ VICTORIA VÁNDALOS ⚔';
+                victoryText.innerHTML = `¡Los Vándalos han ganado!<br><br>Todos los Malhechores han sido eliminados. La Asamblea del Mal ha llegado a su fin. La luz ha triunfado y los reinos podrán respirar en paz.`;
+            } else {
+                victoryTitle.textContent = '⚔ VICTORIA MALHECHORES ⚔';
+                victoryText.innerHTML = `¡Los Malhechores han ganado!<br><br>Han logrado igualar o superar a los Vándalos (${victoryData.malhechores} vs ${victoryData.vandalos}). La corrupción reina suprema. El mal ha triunfado.`;
+            }
+
+            victoryBox.classList.remove('hidden');
+            document.getElementById('playVoiceBtn').disabled = true;
+        }
+
+        function displaySteps(actionText) {
+            const stepsList = document.getElementById('stepsList');
+            stepsList.innerHTML = '';
+
+            // Separar por " | " en lugar de " | "
+            const steps = actionText
+                .split(' | ')
+                .map(line => line.trim())
+                .filter(line => line.length > 0);
+
+            steps.forEach((step, index) => {
+                const cleanStep = step.replace(/^\d+\.\s*/, '').trim();
+                
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'step-item';
+                
+                // Detectar si es una acción que requiere espera
+                const isWaitStep = cleanStep.toLowerCase().includes('espera') || 
+                                  cleanStep.toLowerCase().includes('cuando') ||
+                                  cleanStep.toLowerCase().includes('avísame') ||
+                                  cleanStep.toLowerCase().includes('pregúntame');
+                
+                const pauseIndicator = isWaitStep ? ' ⏸️' : '';
+                
+                stepDiv.innerHTML = `
+                    <div class="step-number">${index + 1}.</div>
+                    <div class="step-text">${cleanStep}${pauseIndicator}</div>
+                `;
+                
+                stepsList.appendChild(stepDiv);
+            });
+        }
+
+        function handlePlayPauseClick() {
+            if (gameEnded) return;
+            if (isSpeaking && speechSynthesis.speaking) {
+                pauseSpeech();
+            } else if (!isSpeaking && speechSynthesis.paused) {
+                continueSpeech();
+            } else {
+                speakNarration();
+            }
+        }
+
+        function speakNarration() {
+            if (gameEnded || (isSpeaking && speechSynthesis.speaking)) return;
+
+            const phaseData = generateGameNarration(currentPhase);
+            const fullText = `${phaseData.narration}. Ahora realiza estos pasos. ${phaseData.action}`;
+
+            const utterance = new SpeechSynthesisUtterance(fullText);
             utterance.lang = 'es-ES';
-            utterance.rate = 0.95;
-            utterance.pitch = 0.9;
+            utterance.rate = 0.85;
+            utterance.pitch = 0.85;
+            utterance.volume = 1;
 
             utterance.onstart = () => {
                 isSpeaking = true;
+                document.getElementById('playVoiceBtn').textContent = '⏸️ Pausar';
                 document.getElementById('playVoiceBtn').classList.add('active');
             };
 
             utterance.onend = () => {
                 isSpeaking = false;
+                document.getElementById('playVoiceBtn').textContent = '🔊 Escuchar Narración';
+                document.getElementById('playVoiceBtn').classList.remove('active');
+            };
+
+            utterance.onerror = () => {
+                isSpeaking = false;
+                document.getElementById('playVoiceBtn').textContent = '🔊 Escuchar Narración';
                 document.getElementById('playVoiceBtn').classList.remove('active');
             };
 
@@ -763,10 +1269,60 @@
             speechSynthesis.speak(utterance);
         }
 
+        function pauseSpeech() {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.pause();
+                isSpeaking = false;
+                document.getElementById('playVoiceBtn').textContent = '▶️ Continuar';
+                document.getElementById('playVoiceBtn').classList.remove('active');
+            }
+        }
+
+        function continueSpeech() {
+            speechSynthesis.resume();
+            isSpeaking = true;
+            document.getElementById('playVoiceBtn').textContent = '⏸️ Pausar';
+            document.getElementById('playVoiceBtn').classList.add('active');
+        }
+
         function stopSpeech() {
             speechSynthesis.cancel();
             isSpeaking = false;
+            document.getElementById('playVoiceBtn').textContent = '🔊 Escuchar Narración';
             document.getElementById('playVoiceBtn').classList.remove('active');
+        }
+
+        function showPhase(phaseIndex) {
+            if (gameEnded) return;
+
+            const phaseData = generateGameNarration(currentPhase);
+
+            document.getElementById('phaseLabel').textContent = currentPhase + 1;
+            document.getElementById('dayNightLabel').textContent = phaseData.type === 'night' ? '🌙' : '☀️';
+            document.getElementById('phaseDisplay').textContent = phaseData.phase;
+            document.getElementById('narratorTitle').textContent = phaseData.phase.toUpperCase();
+            document.getElementById('narratorText').innerHTML = phaseData.narration;
+
+            displaySteps(phaseData.action);
+            stopSpeech();
+
+            // Verificar victoria
+            const victoryCheck = checkVictory();
+            if (victoryCheck.victory) {
+                showVictory(victoryCheck);
+            }
+        }
+
+        function nextPhase() {
+            stopSpeech();
+            currentPhase++;
+            showPhase(currentPhase);
+        }
+
+        function previousPhase() {
+            stopSpeech();
+            if (currentPhase > 0) currentPhase--;
+            showPhase(currentPhase);
         }
 
         function toggleInfo() {
@@ -776,6 +1332,38 @@
         function backToMenu() {
             if (confirm('¿Estás seguro? Se perderá el progreso.')) {
                 location.reload();
+            }
+        }
+
+        function restartGame() {
+            eliminatedPlayers = [];
+            currentPhase = 0;
+            isSpeaking = false;
+            gameEnded = false;
+
+            // Limpiar UI
+            document.getElementById('victoryBox').classList.add('hidden');
+            document.getElementById('eliminatedList').innerHTML = '<p style="color: var(--text-secondary); font-size: 13px;">Ninguno eliminado aún</p>';
+            document.getElementById('playVoiceBtn').disabled = false;
+            document.getElementById('playVoiceBtn').textContent = '🔊 Escuchar Narración';
+
+            // Actualizar displays
+            updateGameDisplay();
+            updateEliminateSelect();
+            showPhase(0);
+
+            stopSpeech();
+        }
+
+        function toggleStepsPause() {
+            stepsPaused = !stepsPaused;
+            const btn = document.getElementById('pauseStepsBtn');
+            if (stepsPaused) {
+                btn.textContent = '▶️ Continuar Pasos';
+                btn.style.background = 'linear-gradient(135deg, #4a7c59 0%, #2d5a3d 100%)';
+            } else {
+                btn.textContent = '⏸️ Pausar Pasos';
+                btn.style.background = '';
             }
         }
 
